@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.online.edu.mapper.EduCourseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.online.edu.entity.EduCourse">
+        <id column="course_id" property="courseId" />
+        <result column="course_name" property="courseName" />
+        <result column="course_master" property="courseMaster" />
+        <result column="course_img_url" property="courseImgUrl" />
+        <result column="course_popularity" property="coursePopularity" />
+        <result column="course_info" property="courseInfo" />
+        <result column="course_date" property="courseDate" />
+        <result column="chapter_count" property="chapterCount" />
+        <result column="is_enable" property="isEnable" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        course_id, course_name, course_master, course_img_url, course_popularity, course_info, course_date, chapter_count, is_enable, is_deleted
+    </sql>
+    <select id="listPage" resultType="com.online.edu.entity.EduCourse">
+        select <include refid="Base_Column_List"/> from edu_course
+        where
+        is_deleted=0
+        and is_enable = 1
+        <if test="edc.courseName!=null and edc.courseName!=''">
+            and course_name like concat('%',#{edc.courseName},'%')
+        </if>
+        <if test="edc.orderBy=='date'">
+            order by course_date
+        </if>
+    </select>
+
+</mapper>

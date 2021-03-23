@@ -1,0 +1,61 @@
+server:
+  port: 8081
+spring:
+  # 上传文件
+  servlet:
+    multipart:
+      #限制单个文件的最大值
+      max-file-size: 500MB
+      #限制上传的多个文件的总大小
+      max-request-size: 1024MB
+  mvc:
+    static-path-pattern: /**
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://121.41.130.35:3306/edu?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: Gxy3286840.
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 下面为连接池的补充设置，应用到上面所有数据源中
+      # 初始化大小，最小，最大
+      initial-size: 10
+      min-idle: 5
+      max-active: 20
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      filter:
+        slf4j:
+          statement-create-after-log-enabled: false
+          statement-close-after-log-enabled: false
+          result-set-open-after-log-enabled: false
+          result-set-close-after-log-enabled: false
+          statement-executable-sql-log-enable: true
+          result-set-log-error-enabled: true
+mybatis-plus:
+  type-aliases-package: com.example.mobilephonecontrast.entity
+  mapperLocations: classpath:mapper/*.xml
+  global-config:
+    db-config:
+      logic-delete-field: isDeleted  # 全局逻辑删除的实体字段名
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#图片上传服务器地址
+upload:
+  img:
+    path: static/upload/img/
+  video:
+    path: static/upload/video/
+  file:
+    path: static/upload/file/
